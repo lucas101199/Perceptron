@@ -6,11 +6,13 @@ import matplotlib.pyplot as plt
 
 def perceptronBinary(X, y, n):
     w = np.zeros(np.shape(X[0]))
+    b = 0
     for i in range(1, n):
         for j in range(len(X)):
-            if y[j] != np.sign(np.dot(w, X[j])):
+            if y[j] != np.sign(np.dot(w, X[j]) + b):
                 w += np.dot(y[j], X[j])
-    return w
+                b += y[j]
+    return w, b
 
 
 #def perceptronMulti(X, y, n):
@@ -36,18 +38,26 @@ def genererDonnees(n):
     return donnees
 
 
+f = open("data.biais", "r")
+line = f.readlines()[4:]
+lines = [line[i][4:] for i in range(len(line))]
+new_line = [lines[i].split('\n')[0][:-1] for i in range(len(lines))]
+
+print(new_line[0][0])
+"""
 data = genererDonnees(1000)
 X = [data[i][0] for i in range(len(data))]
 y = [data[i][1] for i in range(len(data))]
 y = [1 if x == True else -1 for x in y]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-w = perceptronBinary(X_train, y_train, 100)
+w, b = perceptronBinary(X_train, y_train, 100)
 scorea = score(X_train, y_train, w)
 scoret = score(X_test, y_test, w)
 
 
 print(scorea)
 print(scoret)
+print(b)
 
 Xtrue = []
 Xfalse = []
@@ -71,3 +81,4 @@ plt.scatter(Xt, yt, c='red')
 plt.scatter(Xf, yf, c='blue')
 plt.plot(x, -y_)
 plt.show()
+"""
