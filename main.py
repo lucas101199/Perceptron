@@ -14,8 +14,16 @@ def perceptronBinary(X, y, n):
                 b += y[j]
     return w, b
 
+"""
+def perceptronMulti(X, y, n, nbclasse):
+    w = []
+    for k in range(nbclasse):
+        w[k] = np.zeros(np.shape(X[0]))
+    for j in range(n):
+        for i in range(len(X)):
+"""
 
-#def perceptronMulti(X, y, n):
+#def predict_example(Xtest):
 
 
 def score(X, y, w):
@@ -37,13 +45,20 @@ def genererDonnees(n):
         donnees.append(((x1r[i], x2r[i]), True))
     return donnees
 
-
+"""
 f = open("data.biais", "r")
-line = f.readlines()[4:]
+line = f.readlines()[1:-1]
 lines = [line[i][4:] for i in range(len(line))]
-new_line = [lines[i].split('\n')[0][:-1] for i in range(len(lines))]
+new_line = [lines[i].split('\n')[0][1:-2] for i in range(len(lines))]
+Xb = [float(new_line[i].split(',')[0]) for i in range(len(new_line))]
+yb = [new_line[i].split(',')[1][1:] for i in range(len(new_line))]
+y = [1 if x == True else -1 for x in yb]
+w, b = perceptronBinary(Xb, y, 100)
+scorea = score(Xb, y, w)
+print("w = " + str(w))
+print("b = " + str(b))
+print("score de prédiction : " + str(scorea))
 
-print(new_line[0][0])
 """
 data = genererDonnees(1000)
 X = [data[i][0] for i in range(len(data))]
@@ -55,10 +70,11 @@ scorea = score(X_train, y_train, w)
 scoret = score(X_test, y_test, w)
 
 
-print(scorea)
-print(scoret)
-print(b)
+print("w = " + str(w))
+print("b = " + str(b))
+print("score de prédiction : " + str(scoret))
 
+"""
 Xtrue = []
 Xfalse = []
 
